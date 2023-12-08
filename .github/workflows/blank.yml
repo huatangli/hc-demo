@@ -27,7 +27,7 @@ jobs:
       - name: Run a multi-line script
         shell: bash
         run: |
-          export VAULT_ADDR = http://idfvault:55756
+          export VAULT_ADDR = 0
           echo $VAULT_ADDR
           echo Add other actions to build,
           echo test, and deploy your project.
