@@ -31,7 +31,8 @@ jobs:
           ls
           git config --global user.email "liwenxiao@163.com"
           git config --global user.name "liwenxiao"
-          git remote add origin https://github.com/huatangli/hc-demo.git
+          # git remote add origin https://github.com/huatangli/hc-demo.git
           git add .
           git commit -m "哇哇哇哇哇哇哇哇哇哇哇哇哇"
-          git push
+          git tag 1222
+          git push --tags
