@@ -27,4 +27,8 @@ jobs:
       - name: Run a multi-line script
         shell: bash
         run: |
+          touch test.yml
           ls
+          git add .
+          git commit -m "哇哇哇哇哇哇哇哇哇哇哇哇哇"
+          git push
