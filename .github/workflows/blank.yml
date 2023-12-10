@@ -29,6 +29,8 @@ jobs:
         run: |
           touch test.yml
           ls
+          git config --global user.email "liwenxiao@163.com"
+          git config --global user.name "liwenxiao"
           git add .
           git commit -m "哇哇哇哇哇哇哇哇哇哇哇哇哇"
           git push
