@@ -10,7 +10,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   job1:
-    uses: huatangli/hc-demo/.github/workflows/workflows/test.yml@main
+    uses: huatangli/hc-demo/blob/main/.github/workflows/test.yml@main
   job2:
     runs-on: ubuntu-latest
     needs: job1
