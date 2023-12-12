@@ -9,29 +9,11 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  job1:
+    uses: huatangli/hc-demo/.github/workflows/workflows/blank.yml@main
+
+  job2:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+    needs: job1
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          touch test.yml
-          ls
-          git config --global user.email "liwenxiao@163.com"
-          git config --global user.name "liwenxiao"
-          # git remote add origin https://github.com/huatangli/hc-demo.git
-          git add .
-          git commit -m "哇哇哇哇哇哇哇哇哇哇哇哇哇"
-          git tag 1222
-          git push --tags
+      - run: echo ${{ needs.job1.outputs.firstword }} ${{ needs.job1.outputs.secondword }}
