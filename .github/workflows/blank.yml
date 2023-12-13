@@ -20,4 +20,14 @@ jobs:
     needs: job1
     steps:
       - run: |
+          json='{
+            "name": "John Doe",
+            "age": 30,
+            "city": "New York"
+          }'
+          
+          # 解析JSON对象的属性
+          name=$(echo $json | jq -r '.name')
+          age=$(echo $json | jq -r '.age')
+          city=$(echo $json | jq -r '.city')
           echo "Build result: ${{ needs.blank.outputs.firstword }}"
