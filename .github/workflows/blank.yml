@@ -6,6 +6,10 @@ name: hello-github-actions
 on:
   workflow_dispatch:
   repository_dispatch:
+  workflow_run:
+    workflows: ["blank"]
+    types:
+      - completed
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -15,4 +19,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: job1
     steps:
-      - run: echo ${{ needs.job1.outputs.firstword }} ${{ needs.job1.outputs.secondword }}
+      - run: |
+          echo "Build result: ${{ needs.blank.outputs.firstword }}"
