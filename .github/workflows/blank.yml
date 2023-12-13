@@ -30,4 +30,5 @@ jobs:
           name=$(echo $json | jq -r '.name')
           age=$(echo $json | jq -r '.age')
           city=$(echo $json | jq -r '.city')
+          echo $city
           echo "Build result: ${{ needs.blank.outputs.firstword }}"
