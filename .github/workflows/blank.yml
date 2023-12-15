@@ -24,18 +24,10 @@ jobs:
         id: iterate_json
         run: |
 
-          # Use jq to extract the sequences
-          sequences=$(cat ${{ github.event.inputs.json }} | jq -r '.[]')
+          source_repo=($(echo $json | jq -r '.[].source_repo'))
+          tag=($(echo $json | jq -r '.[].tag'))
 
-          # Loop over the sequences
-          for sequence in $sequences; do
-            deploySeq=$(echo $sequence | jq -r '.deploySeq')
-            fallbackSeq=$(echo $sequence | jq -r '.fallbackSeq')
-
-            echo "Deploy Sequence: $deploySeq"
-            echo "Fallback Sequence: $fallbackSeq"
-
-            # Add your logic here for each sequence
-            # For example, you can perform actions based on the deploySeq and fallbackSeq values
+          for ((i=0; i<${#source_repo[@]}; i++)); do
+            echo "source_repo: ${source_repo[i]}, tag: ${tag[i]}"
           done
         
