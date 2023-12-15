@@ -14,8 +14,11 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
-      - name: Parse JSON
-        id: parse_json
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - id: parse_json
         run: |
           echo "${{ github.event.inputs.json }}" > json_data.json
           echo "::set-output name=filename::json_data.json"
