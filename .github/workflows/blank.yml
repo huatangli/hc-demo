@@ -25,4 +25,5 @@ jobs:
         run: |
           echo "Iterating over JSON"
           cat ${{ steps.parse_json.outputs.filename }}
+          cat ${{ steps.parse_json.outputs.filename }} | jq -r '.[] | .deploySeq, .fallbackSeq'
         
