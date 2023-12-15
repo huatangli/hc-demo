@@ -27,7 +27,7 @@ jobs:
           echo "qqqq : $json_data"
           data="${{ inputs.json }}"
           echo "aaaa : $data"
-          echo "$data" | jq -c '.[]' | while IFS= read -rc item; do
+          echo "$data" | jq -c '.[]' | while IFS= read -r item; do
               # 提取每个项的属性
               deploySeq=$(echo "$item" | jq -r '.deploySeq')
               fallbackSeq=$(echo "$item" | jq -r '.fallbackSeq')
