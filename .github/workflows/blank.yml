@@ -5,11 +5,9 @@ name: hello-github-actions
 # Controls when the workflow will run
 on:
   workflow_dispatch:
-  repository_dispatch:
-  workflow_run:
-    workflows: ["blank"]
-    types:
-      - completed
+    inputs:
+      str:
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,15 +18,4 @@ jobs:
     needs: job1
     steps:
       - run: |
-          json='{
-            "name": "John Doe",
-            "age": 30,
-            "city": "New York"
-          }'
-          
-          # 解析JSON对象的属性
-          name=$(echo $json | jq -r '.name')
-          age=$(echo $json | jq -r '.age')
-          city=$(echo $json | jq -r '.city')
-          echo $city
-          echo "Build result: ${{ needs.blank.outputs.firstword }}"
+          echo ${{ inputs.str}}
