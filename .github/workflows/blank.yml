@@ -27,8 +27,6 @@ jobs:
 
           # 遍历数组
           for item in $jsons; do
-            name=$(echo "$item" | jq -r '.source_repo')
-            age=$(echo "$item" | jq -r '.tag')
-            echo "Name: $name, Age: $age"
+            echo "$item"
           done
         
