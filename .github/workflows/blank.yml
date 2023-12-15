@@ -24,11 +24,13 @@ jobs:
         id: iterate_json
         run: |
 
-          array=$(echo "${{ github.event.inputs.json }}" | jq -r '.[]')
+          const jsonStr = '${{ inputs.json }}';
 
-          for item in $array; do
-            name=$(echo "$item" | jq -r '.source_repo')
-            age=$(echo "$item" | jq -r '.tag')
-            echo "Name: $name, Age: $age"
-          done
+          // 解析 JSON 字符串为 JavaScript 对象
+          const jsonObj = JSON.parse(jsonStr);
+          console.log(jsonObj);
+          // 遍历 JSON 对象
+          for (const key in jsonObj) {
+            console.log(`${key}: ${jsonObj[key]}`);
+          }
         
