@@ -25,9 +25,9 @@ jobs:
           json_data='[{"deploySeq":"10-30","fallbackSeq":"30-50","deploypackageFolder":[{"DP_010_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_020_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"fallbackpackageFolder":[{"FB_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_040_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_050_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"source_repo":"VCDRA/CMS_Schedule_App","tag":"CCDDP-2","commitId":"232df1234f"},{"deploySeq":"40-50","fallbackSeq":"10-20","deploypackageFolder":[{"DP_010_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_020_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"fallbackpackageFolder":[{"FB_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_040_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_050_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"source_repo":"VCDRA/CMS_RPT_App","tag":"CCDDP-2","commitId":"34fdgfgss"}]'
           # 使用jq解析JSON数组并遍历
           echo "qqqq : $json_data"
-          echo "aaaa : ${{ inputs.json }}"
-          echo "bbbb : ${{ steps.parse_json.output.name }}"
-          echo "${{ inputs.json }}" | jq -c '.[]' | while IFS= read -rc item; do
+          data=\"${{ inputs.json }}\"
+          echo "aaaa : $data"
+          echo "$data" | jq -c '.[]' | while IFS= read -rc item; do
               # 提取每个项的属性
               deploySeq=$(echo "$item" | jq -r '.deploySeq')
               fallbackSeq=$(echo "$item" | jq -r '.fallbackSeq')
@@ -39,42 +39,3 @@ jobs:
               echo "source_repo: $source_repo"
               echo "-----------------------"
           done
-          
-            json_array="${{ inputs.json }}"
-            
-            # 将 JSON 数组解析为 Bash 数组
-            readarray -t array <<< "$json_array"
-            
-            # 遍历数组并输出到日志
-            for element in "${array[@]}"; do
-              # 打印 deploySeq
-              deploy_seq=$(echo "$element" | jq -r '.deploySeq')
-              echo "deploySeq: $deploy_seq"
-              
-              # 打印 fallbackSeq
-              fallback_seq=$(echo "$element" | jq -r '.fallbackSeq')
-              echo "fallbackSeq: $fallback_seq"
-              
-              # 遍历 deploypackageFolder
-              deploypackage_folder=$(echo "$element" | jq -r '.deploypackageFolder[]')
-              echo "deploypackageFolder:"
-              echo "$deploypackage_folder" | jq -r 'keys[] as $k | "\($k): \(.[$k])"'
-              
-              # 遍历 fallbackpackageFolder
-              fallbackpackage_folder=$(echo "$element" | jq -r '.fallbackpackageFolder[]')
-              echo "fallbackpackageFolder:"
-              echo "$fallbackpackage_folder" | jq -r 'keys[] as $k | "\($k): \(.[$k])"'
-              
-              # 打印 source_repo
-              source_repo=$(echo "$element" | jq -r '.source_repo')
-              echo "source_repo: $source_repo"
-              
-              # 打印 tag
-              tag=$(echo "$element" | jq -r '.tag')
-              echo "tag: $tag"
-              
-              # 打印 commitId
-              commit_id=$(echo "$element" | jq -r '.commitId')
-              echo "commitId: $commit_id"
-              
-              echo "----------------------"
