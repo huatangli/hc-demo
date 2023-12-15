@@ -14,14 +14,15 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
-      - run: |
-          import json
-          echo "啊啊啊啊${{ inputs.json }}"
-          
-          # 将输入值转换为JSON对象
-          input_json = json.loads(${{ inputs.json }})
+      - name: Parse JSON
+        id: parse_json
+        run: |
+          echo "${{ github.event.inputs.json }}" > json_data.json
+          echo "::set-output name=filename::json_data.json"
 
-          # 输出JSON对象的内容
-          print("Input JSON:")
-          print(json.dumps(input_json, indent=4))
+      - name: Iterate over JSON
+        id: iterate_json
+        run: |
+          echo "Iterating over JSON"
+          cat ${{ steps.parse_json.outputs.filename }}
         
