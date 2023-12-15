@@ -6,7 +6,7 @@ name: hello-github-actions
 on:
   workflow_dispatch:
     inputs:
-      str:
+      json:
         type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -19,3 +19,9 @@ jobs:
     steps:
       - run: |
           echo ${{ inputs.str}}
+          tags=$(echo "$json" | jq -rc '.[]')
+
+          # 输出tag值
+          for tag in $tags; do
+              echo "Tag: $tag"
+          done
