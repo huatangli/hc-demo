@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo ${{ inputs.str}}
+          echo ${{ inputs.json }}
           for obj in $(echo "$json" | jq -c '.[]'); do
               deploySeq=$(echo "$obj" | jq -r '.deploySeq')
               fallbackSeq=$(echo "$obj" | jq -r '.fallbackSeq')
