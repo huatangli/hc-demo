@@ -27,6 +27,7 @@ jobs:
 
           # 遍历数组
           for item in $jsons; do
+            echo 111111
             echo "$item"
           done
         
