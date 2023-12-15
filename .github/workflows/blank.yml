@@ -23,7 +23,19 @@ jobs:
       - name: Iterate over JSON
         id: iterate_json
         run: |
-          echo "Iterating over JSON"
-          cat ${{ steps.parse_json.outputs.filename }}
-          cat ${{ steps.parse_json.outputs.filename }} | jq -r '.[] | .deploySeq, .fallbackSeq'
+
+          # Use jq to extract the sequences
+          sequences=$(cat ${{ github.event.inputs.json }} | jq -r '.[]')
+
+          # Loop over the sequences
+          for sequence in $sequences; do
+            deploySeq=$(echo $sequence | jq -r '.deploySeq')
+            fallbackSeq=$(echo $sequence | jq -r '.fallbackSeq')
+
+            echo "Deploy Sequence: $deploySeq"
+            echo "Fallback Sequence: $fallbackSeq"
+
+            # Add your logic here for each sequence
+            # For example, you can perform actions based on the deploySeq and fallbackSeq values
+          done
         
