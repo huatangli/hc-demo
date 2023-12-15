@@ -15,17 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo ${{ inputs.json }}
-          for obj in $(echo "$json" | jq -c '.[]'); do
+          echo "啊啊啊啊${{ inputs.json }}"
+          for obj in $(echo "${{ inputs.json }}" | jq -c '.[]'); do
               deploySeq=$(echo "$obj" | jq -r '.deploySeq')
               fallbackSeq=$(echo "$obj" | jq -r '.fallbackSeq')
               source_repo=$(echo "$obj" | jq -r '.source_repo')
               tag=$(echo "$obj" | jq -r '.tag')
               commitId=$(echo "$obj" | jq -r '.commitId')
 
-              echo "deploySeq: $deploySeq"
-              echo "fallbackSeq: $fallbackSeq"
-              echo "source_repo: $source_repo"
+              echo "deploySeq11: $deploySeq"
+              echo "fallbackSeq11: $fallbackSeq"
+              echo "source_repo11: $source_repo"
               echo "tag: $tag"
               echo "commitId: $commitId"
           done
