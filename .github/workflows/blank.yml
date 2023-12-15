@@ -19,9 +19,17 @@ jobs:
     steps:
       - run: |
           echo ${{ inputs.str}}
-          tags=$(echo "$json" | jq -rc '.[]')
-
-          # 输出tag值
-          for tag in $tags; do
-              echo "Tag: $tag"
+          for obj in $(echo "$json" | jq -c '.[]'); do
+            deploySeq=$(echo "$obj" | jq -r '.deploySeq')
+            fallbackSeq=$(echo "$obj" | jq -r '.fallbackSeq')
+            source_repo=$(echo "$obj" | jq -r '.source_repo')
+            tag=$(echo "$obj" | jq -r '.tag')
+            commitId=$(echo "$obj" | jq -r '.commitId')
+        
+            echo "deploySeq: $deploySeq"
+            echo "fallbackSeq: $fallbackSeq"
+            echo "source_repo: $source_repo"
+            echo "tag: $tag"
+            echo "commitId: $commitId"
+            echo
           done
