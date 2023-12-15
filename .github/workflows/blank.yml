@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       json:
-        type: json
+        type: string
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -16,26 +16,5 @@ jobs:
     steps:
       - id: parse_json
         run: |
-          echo "${{ github.event.inputs.json }}" > json_data.json
-          echo "::set-output name=filename::json_data.json"
-
-      - name: Iterate over JSON
-        id: iterate_json
-        run: |
-          json_data='[{"deploySeq":"10-30","fallbackSeq":"30-50","deploypackageFolder":[{"DP_010_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_020_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"fallbackpackageFolder":[{"FB_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_040_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_050_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"source_repo":"VCDRA/CMS_Schedule_App","tag":"CCDDP-2","commitId":"232df1234f"},{"deploySeq":"40-50","fallbackSeq":"10-20","deploypackageFolder":[{"DP_010_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_020_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"DP_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"fallbackpackageFolder":[{"FB_030_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_040_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]},{"FB_050_corp-db_SchedulerTable_A":["DB_SERVER_LIST_CORP/corp/updateA1.sql","DB_SERVER_LIST_CORP/corp/updateA2.sql"]}],"source_repo":"VCDRA/CMS_RPT_App","tag":"CCDDP-2","commitId":"34fdgfgss"}]'
-          # 使用jq解析JSON数组并遍历
-          echo "qqqq : $json_data"
-          data=$(echo "${{ inputs.json }}" | jq -Rs .)
-          echo "aaaa : $data"
-          echo "$data" | jq -c '.[]' | while IFS= read -r item; do
-              # 提取每个项的属性
-              deploySeq=$(echo "$item" | jq -r '.deploySeq')
-              fallbackSeq=$(echo "$item" | jq -r '.fallbackSeq')
-              source_repo=$(echo "$item" | jq -r '.source_repo')
-          
-              # 在此处处理每个项
-              echo "deploySeq: $deploySeq"
-              echo "fallbackSeq: $fallbackSeq"
-              echo "source_repo: $source_repo"
-              echo "-----------------------"
-          done
+          result=$(git ls-remote --tags https://github.com/huatangli/hc-demo.git 1)
+          echo $result
