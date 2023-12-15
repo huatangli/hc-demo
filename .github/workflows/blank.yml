@@ -24,10 +24,11 @@ jobs:
         id: iterate_json
         run: |
 
-          source_repo=($(echo ${{ github.event.inputs.json }} | jq -r '.[].source_repo'))
-          tag=($(echo $json | jq -r '.[].tag'))
+          array=$(echo "${{ github.event.inputs.json }}" | jq -r '.[]')
 
-          for ((i=0; i<${#source_repo[@]}; i++)); do
-            echo "source_repo: ${source_repo[i]}, tag: ${tag[i]}"
+          for item in $array; do
+            name=$(echo "$item" | jq -r '.source_repo')
+            age=$(echo "$item" | jq -r '.tag')
+            echo "Name: $name, Age: $age"
           done
         
