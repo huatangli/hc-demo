@@ -24,7 +24,7 @@ jobs:
         id: iterate_json
         run: |
 
-          source_repo=($(echo $json | jq -r '.[].source_repo'))
+          source_repo=($(echo ${{ github.event.inputs.json }} | jq -r '.[].source_repo'))
           tag=($(echo $json | jq -r '.[].tag'))
 
           for ((i=0; i<${#source_repo[@]}; i++)); do
