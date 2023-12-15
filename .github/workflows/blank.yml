@@ -39,4 +39,42 @@ jobs:
               echo "source_repo: $source_repo"
               echo "-----------------------"
           done
-        
+          
+            json_array="${{ inputs.json }}"
+            
+            # 将 JSON 数组解析为 Bash 数组
+            readarray -t array <<< "$json_array"
+            
+            # 遍历数组并输出到日志
+            for element in "${array[@]}"; do
+              # 打印 deploySeq
+              deploy_seq=$(echo "$element" | jq -r '.deploySeq')
+              echo "deploySeq: $deploy_seq"
+              
+              # 打印 fallbackSeq
+              fallback_seq=$(echo "$element" | jq -r '.fallbackSeq')
+              echo "fallbackSeq: $fallback_seq"
+              
+              # 遍历 deploypackageFolder
+              deploypackage_folder=$(echo "$element" | jq -r '.deploypackageFolder[]')
+              echo "deploypackageFolder:"
+              echo "$deploypackage_folder" | jq -r 'keys[] as $k | "\($k): \(.[$k])"'
+              
+              # 遍历 fallbackpackageFolder
+              fallbackpackage_folder=$(echo "$element" | jq -r '.fallbackpackageFolder[]')
+              echo "fallbackpackageFolder:"
+              echo "$fallbackpackage_folder" | jq -r 'keys[] as $k | "\($k): \(.[$k])"'
+              
+              # 打印 source_repo
+              source_repo=$(echo "$element" | jq -r '.source_repo')
+              echo "source_repo: $source_repo"
+              
+              # 打印 tag
+              tag=$(echo "$element" | jq -r '.tag')
+              echo "tag: $tag"
+              
+              # 打印 commitId
+              commit_id=$(echo "$element" | jq -r '.commitId')
+              echo "commitId: $commit_id"
+              
+              echo "----------------------"
