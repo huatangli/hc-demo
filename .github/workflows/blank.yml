@@ -26,6 +26,7 @@ jobs:
           # 使用jq解析JSON数组并遍历
           echo "qqqq : $json_data"
           echo "aaaa : ${{ github.event.inputs.json }}"
+          echo "bbbb : ${{ steps.parse_json.output.filename }}"
           echo "$json_data" | jq -c '.[]' | while IFS= read -r item; do
               # 提取每个项的属性
               deploySeq=$(echo "$item" | jq -r '.deploySeq')
