@@ -16,5 +16,7 @@ jobs:
     steps:
       - id: parse_json
         run: |
-          result=$(git ls-remote --tags https://github.com/huatangli/hc-demo.git 1)
-          echo $result
+          for row in $(echo "${{ inputs.json }}" | jq -c '.[]'); do
+            name=$(echo "${row}" | jq -r '.source_repo')
+            echo "Name: ${name}"
+          done
