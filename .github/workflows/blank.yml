@@ -16,7 +16,9 @@ jobs:
     steps:
       - id: parse_json
         run: |
-          for row in $(echo "${{ inputs.json }}" | jq -c '.[]'); do
+          echo ${{ inputs.json }}
+          echo ${{ toJson(inputs.json) }}
+          for row in $(echo "${{ toJson(inputs.json) }}" | jq -c '.[]'); do
             name=$(echo "${row}" | jq -r '.source_repo')
             echo "Name: ${name}"
           done
