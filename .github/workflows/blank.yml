@@ -19,6 +19,6 @@ jobs:
           echo ${{ inputs.json }}
           echo ${{ toJson(inputs.json) }}
           for row in $(echo "${{ toJson(inputs.json) }}" | jq -c '.[]'); do
-            name=$(echo "${row}" | jq -r '.source_repo')
-            echo "Name: ${name}"
+           
+            echo "Name: ${row}"
           done
