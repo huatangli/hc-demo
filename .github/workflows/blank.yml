@@ -18,7 +18,7 @@ jobs:
         run: |
           echo ${{ inputs.json }}
           echo ${{ toJson(inputs.json) }}
-          for row in $(echo "${{ toJson(inputs.json) }}" | jq -c '.[]'); do
+          for row in $(echo "${{ toJson(inputs.json) }}" | jq -rc '.[]'); do
            
             echo "Name: ${row}"
           done
