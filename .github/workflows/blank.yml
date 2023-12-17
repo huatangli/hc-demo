@@ -18,7 +18,16 @@ jobs:
         run: |
           echo ${{ inputs.json }}
           echo ${{ toJson(inputs.json) }}
-          for row in $(echo "${{ toJson(inputs.json) }}" | jq -rc '.[]'); do
+          # for row in $(echo "${{ toJson(inputs.json) }}" | jq -rc '.[]'); do
            
-            echo "Name: ${row}"
+          #   echo "Name: ${row}"
+          # done
+          lines=$(echo "${{ toJson(inputs.json) }}" | jq -r '.[] | @base64')
+
+          # 使用for循环遍历每行数据
+          for line in $lines; do
+              # 解码base64编码的行数据
+              decoded_line=$(echo "$line" | base64 --decode)
+              # 输出解码后的数据
+              echo "$decoded_line"
           done
