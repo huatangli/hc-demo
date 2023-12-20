@@ -14,7 +14,15 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     steps:
-      - id: parse_json
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11.0.1
+          distribution: 'adopt'
+      - name: Run database migrations
         run: |
-          java -version
-          echo $(java -version)
+          cd mmybatis-migrations-3.3.11/bin
+          chmod +x migrate
+          ./migrate -cp lib/mysql-connector-java-8.0.19.jar -c ./sit.properties up
