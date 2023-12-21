@@ -14,8 +14,6 @@ jobs:
   job2:
     runs-on: lwx
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - name: Run database migrations
         run: |
           pwd
