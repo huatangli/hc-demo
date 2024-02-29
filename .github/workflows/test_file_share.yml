@@ -1,0 +1,82 @@
+name: test file share
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: [linux-fc]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Deploy
+        run: |
+          echo deploy
+      - name: upload
+        uses: xudongk/testMybatis/.github/actions/ftp@main
+        with:
+          type: 'UPLOAD'
+          server: '117.88.100.240'
+          user: 'ftp'
+          password: 'ftp@123'
+          remotDir: xudongk_hc-demo_test_file_share
+          stepName: 'build'
+  test:
+    needs: [build]
+    runs-on: [linux-fc]
+    steps:
+      - name: download
+        uses: xudongk/testMybatis/.github/actions/ftp@main
+        with:
+          type: 'DOWNLOAD'
+          server: '117.88.100.240'
+          user: 'ftp'
+          password: 'ftp@123'
+          remotDir: xudongk_hc-demo_test_file_share
+          stepName: 'build'
+      - name: test
+        run: |
+          mkdir a
+          echo test workspace
+          ls
+      - name: upload
+        uses: xudongk/testMybatis/.github/actions/ftp@main
+        with:
+          type: 'UPLOAD'
+          server: '117.88.100.240'
+          user: 'ftp'
+          password: 'ftp@123'
+          remotDir: xudongk_hc-demo_test_file_share
+          stepName: 'test'
+  scan-code:
+    needs: [test]
+    runs-on: [linux-fc]
+    steps:
+      - name: download
+        uses: xudongk/testMybatis/.github/actions/ftp@main
+        with:
+          type: 'DOWNLOAD'
+          server: '117.88.100.240'
+          user: 'ftp'
+          password: 'ftp@123'
+          remotDir: xudongk_hc-demo_test_file_share
+          stepName: 'test'
+      - name: scan
+        run: |
+          echo scan-code workspace
+          ls
+  clean:
+    needs: [scan-code]
+    runs-on: [linux-fc]
+    steps:
+      - name: delete
+        uses: xudongk/testMybatis/.github/actions/ftp@main
+        with:
+          type: 'DELETE'
+          server: ${{ secrets.ACT_URL }}
+          user: ${{ secrets.ACT_USER }}
+          password: ${{ secrets.ACT_PASSWORD }}
+          remotDir: xudongk_hc-demo_test_file_share
+          stepName: 'delete'
+        
+    
+        
