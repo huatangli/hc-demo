@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 jobs:
   build:
-    runs-on: [linux-fc]
+    runs-on: [self-hosted]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -22,7 +22,7 @@ jobs:
           stepName: 'build'
   test:
     needs: [build]
-    runs-on: [linux-fc]
+    runs-on: [self-hosted]
     steps:
       - name: download
         uses: xudongk/testMybatis/.github/actions/ftp@main
@@ -49,7 +49,7 @@ jobs:
           stepName: 'test'
   scan-code:
     needs: [test]
-    runs-on: [linux-fc]
+    runs-on: [self-hosted]
     steps:
       - name: download
         uses: xudongk/testMybatis/.github/actions/ftp@main
@@ -66,7 +66,7 @@ jobs:
           ls
   clean:
     needs: [scan-code]
-    runs-on: [linux-fc]
+    runs-on: [self-hosted]
     steps:
       - name: delete
         uses: xudongk/testMybatis/.github/actions/ftp@main
